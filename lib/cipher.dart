@@ -1,8 +1,11 @@
 import 'dart:math';
+import "dart:developer" as dev;
 
 class Cipher {
   static const int _asciiLen = 127;
-  static String encode(String text, int seed) {
+  static String encode(String text, int? seed) {
+    dev.log("encoding with seed: $seed");
+    if (seed == null) return text;
     final Random rng = Random(seed);
     final List<int> ascii = text.codeUnits;
     final List<int> shifted = ascii.map(
@@ -14,7 +17,9 @@ class Cipher {
     return String.fromCharCodes(shifted);
   }
 
-  static String decode(String hash, int seed) {
+  static String decode(String hash, int? seed) {
+    dev.log("decoding with seed: $seed");
+    if (seed == null) return hash;
     final Random rng = Random(seed);
     final List<int> ascii = hash.codeUnits;
     final List<int> shifted = ascii.map(
